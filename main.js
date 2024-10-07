@@ -1,42 +1,40 @@
 let toggle = document.querySelector("#header .toggle-button");
 let collapse = document.querySelectorAll("#header .collapse");
 
-
-toggle.addEventListener('click', function () {
-  collapse.forEach(col => col.classList.toggle("collapse-toggle"));
-})
+toggle.addEventListener("click", function () {
+  collapse.forEach((col) => col.classList.toggle("collapse-toggle"));
+});
 //swiper library
 // main.js
-document.addEventListener('DOMContentLoaded', function () {
-  var swiper = new Swiper('.swiper-container', {
-    direction: 'horizontal',
+document.addEventListener("DOMContentLoaded", function () {
+  var swiper = new Swiper(".swiper-container", {
+    direction: "horizontal",
     loop: true,
     slidesPerView: 1,
     autoplay: {
-      delay: 3000
+      delay: 3000,
     },
     pagination: {
-      el: '.swiper-pagination',
+      el: ".swiper-pagination",
       clickable: true,
     },
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
     },
   });
-       detectColorScheme();
- });
+  detectColorScheme();
+});
 
-window.onscroll = function () { myFunction() };
-
+window.onscroll = function () {
+  myFunction();
+};
 
 // get the current value
 let navbar = document.getElementById("header");
 
-
 // get the navbar position
 let sticky = navbar.offsetTop;
-
 
 // sticky function
 function myFunction() {
@@ -47,14 +45,10 @@ function myFunction() {
   }
 }
 
-
-
-
 // Theme Switcher
 //determines if the user has a set theme
 function detectColorScheme() {
-  var theme = "light";    //default to light
-
+  var theme = "light"; //default to light
 
   //local storage is used to override OS theme settings
   if (localStorage.getItem("theme")) {
@@ -69,40 +63,55 @@ function detectColorScheme() {
     var theme = "dark";
   }
 
-
   //dark theme preferred, set document with a `data-theme` attribute
   if (theme == "dark") {
-    let toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+    let toggleSwitch = document.querySelector(
+      '#theme-switch input[type="checkbox"]'
+    );
     document.documentElement.setAttribute("data-theme", "dark");
     toggleSwitch.checked = true;
   }
 }
 
-
 //identify the toggle switch HTML element
-const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
-
+const toggleSwitch = document.querySelector(
+  '#theme-switch input[type="checkbox"]'
+);
 
 //function that changes the theme, and sets a localStorage variable to track the theme between page loads
 function switchTheme(e) {
   if (e.target.checked) {
-    localStorage.setItem('theme', 'dark');
-    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem("theme", "dark");
+    document.documentElement.setAttribute("data-theme", "dark");
     toggleSwitch.checked = true;
   } else {
-    localStorage.setItem('theme', 'light');
-    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem("theme", "light");
+    document.documentElement.setAttribute("data-theme", "light");
     toggleSwitch.checked = false;
   }
 }
 
-
 //listener for changing themes
-toggleSwitch.addEventListener('change', switchTheme, false);
-
+toggleSwitch.addEventListener("change", switchTheme, false);
 
 //pre-check the dark-theme checkbox if dark-theme is set
 if (document.documentElement.getAttribute("data-theme") == "dark") {
   toggleSwitch.checked = true;
 }
 
+const carouselContainer = document.querySelector(".carousel-container");
+const nextBtn = document.querySelector(".next-btn");
+const prevBtn = document.querySelector(".prev-btn");
+
+let scrollPosition = 0;
+const scrollAmount = document.querySelector(".image-card").clientWidth;
+
+nextBtn.addEventListener("click", () => {
+  scrollPosition -= scrollAmount;
+  carouselContainer.style.transform = `translateX(${scrollPosition}px)`;
+});
+
+prevBtn.addEventListener("click", () => {
+  scrollPosition += scrollAmount;
+  carouselContainer.style.transform = `translateX(${scrollPosition}px)`;
+});
